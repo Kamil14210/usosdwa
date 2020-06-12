@@ -33,6 +33,13 @@ def student_details(request, student_id):
 	student = Student.objects.get(pk=student_id)
 	return render(request, "myapp/student_details.html", {"student": student})
 
+def student_delete(request, student_id):
+    student = Student.objects.get(pk=student_id)
+    student.delete()
+    template = loader.get_template("myapp/index.html")
+    context = {"students": Student.objects.all()}
+    return HttpResponse(template.render(context, request))
+
 def subjects_index(request):
     template = loader.get_template("myapp/subjects_index.html")
     context = {"subjects":Subject.objects.all()}
